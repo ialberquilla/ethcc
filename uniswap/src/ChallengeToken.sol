@@ -10,6 +10,7 @@ import {PoolId, PoolIdLibrary} from "v4-core/src/types/PoolId.sol";
 import {BalanceDelta} from "v4-core/src/types/BalanceDelta.sol";
 import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/src/types/BeforeSwapDelta.sol";
 import {SafeCast} from "./SafeCast.sol";
+import {IGamer} from "./IGamer.sol";
 
 contract ChallengeToken is BaseHook {
     using PoolIdLibrary for PoolKey;
@@ -19,12 +20,15 @@ contract ChallengeToken is BaseHook {
     bool isChallengeActive = true;
 
     address treasury;
+    address scoreManager;
 
     constructor(
         IPoolManager _poolManager,
-        address _treasury
+        address _treasury,
+        address _scoreManager
     ) BaseHook(_poolManager) {
         treasury = _treasury;
+        scoreManager = _scoreManager;
     }
 
     function getHookPermissions()
@@ -75,9 +79,9 @@ contract ChallengeToken is BaseHook {
         BalanceDelta,
         bytes calldata hookData
     ) external override returns (bytes4, int128) {
-        uint256 gamerfeeDelta = 10;
-
         address gamer = abi.decode(hookData, (address));
+
+        uint256 gamerfeeDelta = IGamer(scoreManager).getGamerScore(gamer);
 
         gamerBets[msg.sender][gamer] = uint256(params.amountSpecified);
 
@@ -102,9 +106,5 @@ contract ChallengeToken is BaseHook {
         bytes calldata
     ) external override returns (bytes4) {
         return BaseHook.beforeRemoveLiquidity.selector;
-    }
-
-    function getGamerBets(address gamer) external view returns (uint256) {
-        return gamerBets[gamer];
     }
 }
