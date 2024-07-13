@@ -7,21 +7,21 @@ import {
   Stack,
   IconButton,
   Badge,
-  Button,
 } from "@mui/material";
 import PropTypes from "prop-types";
 
 // components
 import Profile from "./Profile";
 import { IconBellRinging, IconMenu } from "@tabler/icons-react";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { useAccount } from "wagmi";
 
 interface ItemType {
   toggleMobileSidebar: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Header = ({ toggleMobileSidebar }: ItemType) => {
-  // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  // const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const { isConnected } = useAccount()
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     boxShadow: "none",
@@ -76,15 +76,7 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
               },
             }}
           >
-            <Button
-              variant="contained"
-              disableElevation
-              color="primary"
-              target="_blank"
-              href="https://www.wrappixel.com/templates/spike-nextjs-admin-template/"
-            >
-              Upgrade to Pro
-            </Button>
+            <DynamicWidget />
           </Box>
           <Profile />
         </Stack>

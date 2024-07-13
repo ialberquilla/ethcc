@@ -2,6 +2,8 @@
 import { baselightTheme } from "@/utils/theme/DefaultColors";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Providers } from "@/context/providers";
+import { SessionProvider } from "@/context/session";
 
 export default function RootLayout({
   children,
@@ -11,11 +13,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={baselightTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <SessionProvider>
+            <ThemeProvider theme={baselightTheme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </SessionProvider>
+        </Providers>
       </body>
     </html>
   );
