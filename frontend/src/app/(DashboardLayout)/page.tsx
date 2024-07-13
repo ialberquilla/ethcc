@@ -2,12 +2,6 @@
 import { Grid, Box } from '@mui/material';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 // components
-import ProfitExpenses from '@/app/(DashboardLayout)/components/dashboard/ProfitExpenses';
-import TrafficDistribution from '@/app/(DashboardLayout)/components/dashboard/TrafficDistribution';
-import UpcomingSchedules from '@/app/(DashboardLayout)/components/dashboard/UpcomingSchedules';
-import TopPayingClients from '@/app/(DashboardLayout)/components/dashboard/TopPayingClients';
-import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
-import ProductSales from '@/app/(DashboardLayout)/components/dashboard/ProductSales';
 
 const Dashboard = () => {
   return (
@@ -27,11 +21,7 @@ const Dashboard = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} lg={12}>
-            <TopPayingClients />
-          </Grid>
           <Grid item xs={12}>
-            <Blog />
           </Grid>
         </Grid>
       </Box>

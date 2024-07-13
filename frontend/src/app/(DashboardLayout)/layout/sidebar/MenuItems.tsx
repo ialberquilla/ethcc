@@ -2,6 +2,7 @@ import {
   IconAperture,
   IconCopy,
   IconLayoutDashboard,
+  IconMoneybag,
   IconLogin,
   IconMoodHappy,
   IconTypography,
@@ -29,7 +30,7 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: "Support",
-    icon: IconTypography,
+    icon: IconMoneybag,
     href: "/support",
   }
 ];

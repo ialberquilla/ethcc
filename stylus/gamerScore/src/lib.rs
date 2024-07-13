@@ -31,23 +31,24 @@ sol_storage! {
 
 #[external]
 impl Score {
-    pub fn score(&self) -> U256 {
+    pub fn get_score(&self) -> U256 {
         self.score.get()
     }
 
-    pub fn time_to_score(&self) -> U256 {
+    pub fn get_time_to_score(&self) -> U256 {
         self.time_to_score.get()
     }
 }
 
 #[external]
 impl Scores {
-    pub fn add_score(&mut self, score: U256, time_to_score: U256) {
-        self.scores.push(Score { score, time_to_score });
+    pub fn add_score(&mut self, score: StorageUint<U256>, time_to_score: StorageUint<U256>) {
+        self.scores.push(Score {
+            score,
+            time_to_score,
+        });
     }
 }
 
 #[external]
 impl Gamer {}
-
-

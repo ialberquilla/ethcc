@@ -9,14 +9,23 @@ import {PoolKey} from "v4-core/src/types/PoolKey.sol";
 import {PoolId, PoolIdLibrary} from "v4-core/src/types/PoolId.sol";
 import {BalanceDelta} from "v4-core/src/types/BalanceDelta.sol";
 import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/src/types/BeforeSwapDelta.sol";
+import {SafeCast} from "./SafeCast.sol";
 
 contract ChallengeToken is BaseHook {
     using PoolIdLibrary for PoolKey;
+    using SafeCast for *;
 
-    mapping(address => uint256) public gamerBets;
+    mapping(address => mapping(address => uint256)) public gamerBets;
     bool isChallengeActive = true;
 
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
+    address treasury;
+
+    constructor(
+        IPoolManager _poolManager,
+        address _treasury
+    ) BaseHook(_poolManager) {
+        treasury = _treasury;
+    }
 
     function getHookPermissions()
         public
@@ -46,22 +55,16 @@ contract ChallengeToken is BaseHook {
     function beforeSwap(
         address,
         PoolKey calldata key,
-        IPoolManager.SwapParams calldata,
+        IPoolManager.SwapParams calldata poolParams,
         bytes calldata hookData
     ) external override returns (bytes4, BeforeSwapDelta, uint24) {
         if (!isChallengeActive) {
             revert("challenge ended");
         }
-        address gamer = abi.decode(hookData, (address));
-
-        //Get delta for the gamer
-
-        uint24 delta = 20;
-
         return (
             BaseHook.beforeSwap.selector,
             BeforeSwapDeltaLibrary.ZERO_DELTA,
-            delta
+            0
         );
     }
 
@@ -72,9 +75,13 @@ contract ChallengeToken is BaseHook {
         BalanceDelta,
         bytes calldata hookData
     ) external override returns (bytes4, int128) {
+        uint256 gamerfeeDelta = 10;
+
         address gamer = abi.decode(hookData, (address));
 
-        gamerBets[gamer] = uint256(params.amountSpecified);
+        gamerBets[msg.sender][gamer] = uint256(params.amountSpecified);
+
+        poolManager.take(key.currency0, treasury, gamerfeeDelta);
 
         return (BaseHook.afterSwap.selector, 0);
     }

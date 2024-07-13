@@ -8,6 +8,7 @@ import {
   TableRow,
   Chip,
   Paper,
+  Button,
 } from "@mui/material";
 import DashboardCard from "@/app/(DashboardLayout)//components/shared/DashboardCard";
 import TableContainer from "@mui/material/TableContainer";
@@ -18,16 +19,16 @@ const products = [
     id: "1",
     name: "Sunil Joshi",
     post: "Web Designer",
-    pname: "Elite Admin",
+    pname: "82%",
     priority: "Low",
     pbg: "primary.main",
-    budget: "3.9",
+    budget: "32.9",
   },
   {
     id: "2",
     name: "Andrew McDownland",
     post: "Project Manager",
-    pname: "Real Homes WP Theme",
+    pname: "78%",
     priority: "Medium",
     pbg: "secondary.main",
     budget: "24.5",
@@ -36,7 +37,7 @@ const products = [
     id: "3",
     name: "Christopher Jamil",
     post: "Project Manager",
-    pname: "MedicalPro WP Theme",
+    pname: "75%",
     priority: "High",
     pbg: "error.main",
     budget: "12.8",
@@ -45,7 +46,7 @@ const products = [
     id: "4",
     name: "Nirav Joshi",
     post: "Frontend Engineer",
-    pname: "Hosting Press HTML",
+    pname: "56%",
     priority: "Critical",
     pbg: "success.main",
     budget: "2.4",
@@ -54,7 +55,7 @@ const products = [
 
 const TopPayingClients = () => {
   return (
-    <DashboardCard title="Top Paying Clients">
+    <DashboardCard title="Gamers">
       <Box sx={{ overflow: "auto" }}>
         <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
           <Table
@@ -71,22 +72,22 @@ const TopPayingClients = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Assigned
+                    Gamer
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Name
+                    Win Probability
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Priority
+                    Bet price
                   </Typography>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Budget
+                    Support
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -135,19 +136,17 @@ const TopPayingClients = () => {
                       {product.pname}
                     </Typography>
                   </TableCell>
-                  <TableCell>
-                    <Chip
-                      sx={{
-                        px: "4px",
-                        backgroundColor: product.pbg,
-                        color: "#fff",
-                      }}
-                      size="small"
-                      label={product.priority}
-                    ></Chip>
+                  <TableCell align="left">
+                    <Typography variant="h6">${product.budget}</Typography>
                   </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="h6">${product.budget}k</Typography>
+                  <TableCell align="left">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      fullWidth 
+                    >
+                      Support
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
