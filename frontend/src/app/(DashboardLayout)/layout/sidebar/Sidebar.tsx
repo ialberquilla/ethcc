@@ -1,7 +1,5 @@
 import { useMediaQuery, Box, Drawer } from "@mui/material";
-import Logo from "../shared/logo/Logo";
 import SidebarItems from "./SidebarItems";
-import { Upgrade } from "./Updrade";
 
 interface ItemType {
   isMobileSidebarOpen: boolean;
@@ -60,14 +58,12 @@ const Sidebar = ({
             {/* Logo */}
             {/* ------------------------------------------- */}
             <Box px={3}>
-              <Logo />
             </Box>
             <Box>
               {/* ------------------------------------------- */}
               {/* Sidebar Items */}
               {/* ------------------------------------------- */}
               <SidebarItems />
-              <Upgrade />
             </Box>
           </Box>
         </Drawer>
@@ -92,13 +88,11 @@ const Sidebar = ({
       {/* Logo */}
       {/* ------------------------------------------- */}
       <Box px={2}>
-        <Logo />
       </Box>
       {/* ------------------------------------------- */}
       {/* Sidebar For Mobile */}
       {/* ------------------------------------------- */}
       <SidebarItems />
-      <Upgrade />
     </Drawer>
   );
 };
