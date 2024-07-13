@@ -10,34 +10,40 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import { useState } from "react";
 import DashboardCard from "@/app/(DashboardLayout)//components/shared/DashboardCard";
 import TableContainer from "@mui/material/TableContainer";
 import BlankCard from "../shared/BlankCard";
+import { getDelta } from "@/utils/delta";
+
+const TopPayingClients = () => {
+
+const [deltas, setDeltas] = useState<number[]>(getDelta());
 
 const products = [
   {
     id: "1",
     name: "Sunil Joshi",
     post: "Web Designer",
-    pname: "82%",
+    pname: `8${deltas[0]}%`,
     priority: "Low",
     pbg: "primary.main",
-    budget: "32.9",
+    budget: `3${deltas[0]}.${deltas[1]}`,
   },
   {
     id: "2",
     name: "Andrew McDownland",
     post: "Project Manager",
-    pname: "78%",
+    pname: `7${deltas[0]}%`,
     priority: "Medium",
     pbg: "secondary.main",
-    budget: "24.5",
+    budget: `2${deltas[1]}.${deltas[1]}`,
   },
   {
     id: "3",
     name: "Christopher Jamil",
     post: "Project Manager",
-    pname: "75%",
+    pname: `3${deltas[2]}.${deltas[2]}`,
     priority: "High",
     pbg: "error.main",
     budget: "12.8",
@@ -46,14 +52,13 @@ const products = [
     id: "4",
     name: "Nirav Joshi",
     post: "Frontend Engineer",
-    pname: "56%",
+    pname: `1${deltas[3]}.${deltas[3]}`,
     priority: "Critical",
     pbg: "success.main",
     budget: "2.4",
   },
 ];
 
-const TopPayingClients = () => {
   return (
     <DashboardCard title="Gamers">
       <Box sx={{ overflow: "auto" }}>
