@@ -70,11 +70,11 @@ impl Gamers {
         let mut total_entries = self.total_gamer_entries.get(gamer);
         let mut total_score = U256::from(0);
 
-        for i in 0..total_entries {
-            let score = self.gamer_entries_scores.get(gamer).get(U256::from(i));
-            total_score += score;
-        }
+        // for i in 0..total_entries {
+        //     let score = self.gamer_entries_scores.get(gamer).get(U256::from(i));
+        //     total_score += score;
+        // }
 
-        self.gamer_scores.set(gamer, total_score);
+        // self.gamer_scores.set(gamer, total_score);
     }
 }

@@ -12,6 +12,7 @@ import { getPimlicoSmartAccountClient } from "@/lib/permissionless";
 export type SessionValue = {
     isSetUpLoading: boolean
     smartAccountClient: any
+    walletClient: any
 };
 
 const SessionContext = createContext<SessionValue>({} as SessionValue);
@@ -23,6 +24,7 @@ type SessionProviderProps = {
 export function SessionProvider({ children }: SessionProviderProps) {
     const [isSetUpLoading, setIsSetUpLoading] = useState(false)
     const [smartAccountClient, setSmartAccountClient] = useState<any>()
+    const [walletClient, setWalletClient] = useState<any>()
 
     const { address, chain } = useAccount();
     const { primaryWallet, isAuthenticated } = useDynamicContext();
@@ -40,6 +42,11 @@ export function SessionProvider({ children }: SessionProviderProps) {
             if (!primaryWallet) throw new Error("Invalid dynamic primary wallet")
 
             const walletClient = await createWalletClientFromWallet(primaryWallet)
+
+            setWalletClient(walletClient)
+
+            console.log({address, chain, walletClient})
+
             const smartClient = await getPimlicoSmartAccountClient(address, chain, walletClient)
 
             setSmartAccountClient(smartClient)
@@ -55,6 +62,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const value: SessionValue = {
         isSetUpLoading,
         smartAccountClient,
+        walletClient
     };
 
     return (

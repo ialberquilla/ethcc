@@ -2,21 +2,20 @@ import { useState } from "react";
 import { erc20Abi } from "viem";
 import { useSession } from "@/context/session";
 
-type WriteFnNames = "approve" | "transfer";
 
 export function useContract() {
     const [isLoading, setIsLoading] = useState(false);
 
-    const { smartAccountClient } = useSession()
-    const contractAddress = ""
+    const { smartAccountClient, walletClient } = useSession()
+    const USDC_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
 
-    const executeContractAction = async (functionName: WriteFnNames, ...args: any) => {
+    const executeContractAction = async (functionName: string, contractAddress: string, ...args: any) => {
         try {
             if (!smartAccountClient) throw new Error("Invalid smart account client")
 
             setIsLoading(true);
             console.log(`Executing ${functionName} action.`)
-            return await smartAccountClient.writeContract({
+            return await walletClient.writeContract({
                 abi: erc20Abi,
                 address: contractAddress as `0x${string}`,
                 functionName,
@@ -33,8 +32,8 @@ export function useContract() {
     return {
         isLoading,
         approve: (spender: string, amount: number) =>
-            executeContractAction("approve", spender, BigInt(amount)),
+            executeContractAction("approve", USDC_ADDRESS, spender, BigInt(amount)),
         transfer: (receiver: string, amount: number) =>
-            executeContractAction("transfer", receiver, BigInt(amount)),
+            executeContractAction("transfer", USDC_ADDRESS, receiver, BigInt(amount)),
     };
 }
